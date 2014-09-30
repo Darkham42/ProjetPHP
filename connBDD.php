@@ -1,30 +1,51 @@
 <?php
 
-$hote = '127.0.0.1';
-$port = '1521'; // port par défaut
-$service = 'xe';
-$utilisateur = 'copie_tdf';
-$motdepasse = 'copie_tdf';
+	//Connexion à la BDD-----------------------------------
+	
+	function ouvrirConnexion(){
 
-$lien_base =
-"oci:dbname=(DESCRIPTION =
-(ADDRESS_LIST =
-  (ADDRESS =
-    (PROTOCOL = TCP)
-    (Host = ".$hote .")
-    (Port = ".$port."))
-)
-(CONNECT_DATA =
-  (SERVICE_NAME = ".$service.")
-)
-)";
+		$login = 'copie_tdf';
+		$mdp = 'copie_tdf';
+		$instance = 'xe';
 
-try {
-  // connexion à la base Oracle et création de l'objet
-  $connexion = new PDO($lien_base, $utilisateur, $motdepasse);
-}
-catch (PDOException $erreur) {
-  echo $erreur->getMessage();
-}
+		$conn = oci_connect($login, $mdp, $instance);
+			if (!$conn) {  
+				$e = oci_error();  
+				print htmlentities($e['Il y a un problème de connexion (verifiez le MDP, l\'instance ou le nom de connexion ;) ']);  
+				exit;
+			}
+		return $conn;
+	}
+
+	//Préparation de requete-------------------------------
+
+	function preparerRequete($conn,$req){
+		$cur = oci_parse($conn, $req);
+		if (!$cur) {  
+			$e = oci_error($conn);  
+			print htmlentities($e['Il y a un problème dans la tentative de préparation de la requete']);  
+			exit;
+		}
+	return $cur;
+	}
+
+	//Execution de la requete------------------------------
+	
+	function executerRequete($cur){
+		$e = oci_error($cur); 
+		$r = oci_execute($cur);
+		if (!$r) {  
+			$e = oci_error($cur);
+			echo htmlentities($e['Il y a un problème lors de l\'execution de la requete']);  
+			exit;
+		}
+		return $r;
+	}
+
+	//Fermeture de la connection---------------------------
+
+	function fermerConnexion($conn){
+		oci_close($conn);
+	}
 
 ?>
