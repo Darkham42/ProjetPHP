@@ -7,13 +7,6 @@
 	utf8_decode('aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY')));
 	}
 
-	// Fonction retirant les accents d'une maj-------------	
-
-	function retireAccentsMaj($string) {
-		return $string=utf8_encode(strtr(utf8_decode($string),utf8_decode('¿¡¬√ƒ«»… ÀÃÕŒœ—“”‘’÷Ÿ⁄€‹›'),
-	utf8_decode('AAAAACEEEEIIIINOOOOOUUUUY')));
-	}
-
 	// Met en majuscule------------------------------------
 
 	function maj($s) {
@@ -43,11 +36,10 @@
 		$truchar1='';
 		$truchar2='--';
 		$truchar22='\'';
-		$truchar223='\'\'';
 		$truchar222='" "';
 		$truchar3='';
 		
-		$var=retireAccentsMaj($var);
+		$var=retireAccents($var);
 
 		while(preg_match($badchar1,$var)==1) {
 			$var=preg_replace($badchar1,$truchar1,$var);
@@ -59,10 +51,6 @@
 
 		if(preg_match($badchar22,$var)==1) {
 			$var=preg_replace($badchar22,$truchar22,$var);
-		}
-
-		if(preg_match('/\'/',$var)==1) {
-			$var=preg_replace('/\'/',$truchar223,$var);
 		}
 
 		if(preg_match($badchar222,$var)==1) {
