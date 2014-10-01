@@ -13,7 +13,6 @@
 
 		<h2 align="center">Ajout d'un coureur</h2>
 
-
 	<!-- FORMULAIRE POUR AJOUTER UN COUREUR A LA BASE -->
 		
 		<?php
@@ -52,13 +51,11 @@
 			if(!isset($valeurPays)) {
 				$valeurPays = "";
 			}
-			
 
 			if(isset($_POST['Ajouter'])) {
 
 				// Champs remplis ?
-				if($_POST['nom'] != null && $_POST['prenom'] != null && $_POST['pays'] != "Selectionnez un pays") {
-						
+				if($_POST['nom'] != null && $_POST['prenom'] != null && $_POST['pays'] != "Selectionnez un pays") {	
 						
 						// NOM
 							if(!testNom($_POST['nom'])) {
@@ -108,9 +105,7 @@
 						// PAYS
 							if($erreur == 1){
 								$valeurPays = $_POST['pays'];
-							}
-							
-						
+							}						
 						
 						if($erreur != 1){
 
@@ -140,13 +135,12 @@
 							$valeurAnnee = "";
 							$valeurParticipation = "";
 							
-
 							FermerConnexion($conn);
 						}
 				}
+
 				else {
 						
-						//permet d'afficher les variables dans les differents element de la page
 						if(empty($_POST['nom'])) {
 							$valeurTestNom = "Veuillez entrer un nom valide !";
 						}
@@ -178,9 +172,7 @@
 						
 				}
 			}
-		?>
-			
-			
+		?>	
 			
 		<form name="formAddCoureur" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
 			<div align="center" style="margin-left:10%; margin-right:10%">
@@ -262,7 +254,7 @@
 								<?php
 
 									$conn = OuvrirConnexion();
-									$req = 'SELECT code_tdf, c_pays, nom from TDF_PAYS order by nom';
+									$req = 'SELECT code_tdf, c_pays, nom from TDF_PAYS where nom not like \'-%\' order by nom';
 									$cur = preparerRequete($conn, $req);
 									$tab = executerRequete($cur);
 									FermerConnexion($conn);
@@ -270,13 +262,12 @@
 									
 									echo "<select name='pays' size=1>";
 										echo "<option value='Selectionnez un pays'>Selectionnez un pays</option>";
-										for ($i=0;$i<$nbLignes;$i++){
-											if($tab[$i]["CODE_TDF"] == $valeurPays){//si la variable $valeurpays precedement rentré vaut celle de la case actuelle du tableau
-											//alors on la met en selected
-											echo '<option value="'.$tab[$i]["CODE_TDF"].'" selected>'.$tab[$i]["NOM"];
+										for ($i=0;$i<$nbLignes;$i++) {
+											if($tab[$i]["CODE_TDF"] == $valeurPays ){
+												echo '<option value="'.$tab[$i]["CODE_TDF"].'" selected>'.$tab[$i]["NOM"];
 											}
-											else{
-											echo '<option value="'.$tab[$i]["CODE_TDF"].'">'.$tab[$i]["NOM"];
+											else {
+												echo '<option value="'.$tab[$i]["CODE_TDF"].'">'.$tab[$i]["NOM"];
 											}
 										  echo '</option>';
 										} 	
