@@ -60,48 +60,48 @@
 					if($_POST['nom'] != "" || $_POST['prenom'] != "" || $_POST['annee_naissance'] != "" || $_POST['annee_tour'] != "" || $_POST['pays'] != "") {
 						
 						$valeurInsertion = '';
-						$valeurNumCoureur = $_POST[''];
+						$valeurNumCoureur = $_POST['numCoureur'];
 
-						if($_POST['nom'] != "") {
-							if((substr($_POST['nom'], -1)) == "-" || (substr($_POST['nom'], 0 , 1)) == "-" || is_numeric($_POST['nom']) ||!ctype_alpha($_POST['nom'])) {	
+						// NOM
+							if(!testNom($_POST['nom'])) {
 								$erreur = 1;
-								$valeurTestNom = "Veuillez entrer un nom valide !";
+								$valeurTestNom="Veuillez entrer un nom valide !";
 							}
 							else {
-								$valeurNom = $_POST['nom'];
-								$nom = strtoupper(trim($_POST['nom']));
-								$valeurInsertion = $valeurInsertion." nom = '".$nom."'";
+								$valeurNom = testNom($_POST['nom']);
+								$valeurInsertion = $valeurInsertion." nom = '".$valeurNom."'";
 							}
-						}
 						
-						if($_POST['prenom'] != "") {
-							if(!ctype_alpha($_POST['prenom']) || is_numeric($_POST['prenom'])) {
+						// PRENOM
+							if(!testPrenom($_POST['prenom'])) {
 								$erreur = 1;
 								$valeurTestPrenom = "Veuillez entrer un prénom valide !";
 							}
-							else {
-								$valeurPrenom = $_POST['prenom'];
-								$valeurPrenom = strtolower($valeurPrenom);
-								$prenom = ucwords($valeurPrenom);
 
-								if($valeurInsertion == "")
-									$valeurInsertion = $valeurInsertion." prenom = '".$prenom."'";
-								else
-									$valeurInsertion = $valeurInsertion.", prenom = '".$prenom."'";
+							$valeurPrenom = testPrenom($_POST['prenom']);						
+							$valeurInsertion = $valeurInsertion.", prenom = '".$valeurPrenom."'";
+						
+						// ANNEE
+							if($_POST['annee_naissance'] != null) {
+								$annee = $_POST['annee_naissance'];
+								$type = gettype($annee);
+
+									if (($_POST['annee_tour']-$_POST['annee_naissance'])>18) {
+										$valeurAnnee = $_POST['annee_naissance'];
+										$valeurInsertion = $valeurInsertion.', annee_naissance = '.$valeurAnnee;
+									}
+
+									else {
+										$valeurTestAnneeNaissance = "Impossible de participer au TDF si vous n'êtes pas né !";
+										$erreur = 1;
+									}
 							}
-						}
-						
-						if($_POST['annee_naissance'] != "") {
-								$annee_naissance = $_POST['annee_naissance'];
-								$valeurAnnee = $annee_naissance;
-								if($valeurInsertion == "") {
-									$valeurInsertion = $valeurInsertion.' annee_naissance = '.$annee_naissance;
-								}
-								else {
-									$valeurInsertion = $valeurInsertion.', annee_naissance = '.$annee_naissance;
-								}
-						}
-						
+							else {
+								$erreur = 1;
+								$valeurTestAnneeNaissance = "Veuillez entrer une date valide !";
+							}
+
+						// PREMIERE PARTICIPATION						
 						if($_POST['annee_tour'] != "") {
 							$annee_tour = $_POST['annee_tour'];
 							$valeurParticipation = $annee_tour;
@@ -110,7 +110,8 @@
 							else
 								$valeurInsertion = $valeurInsertion.', annee_tdf = '.$annee_tour;
 						}
-						 
+						
+						// PAYS
 						if($_POST['pays'] != "") {
 							$pays = $_POST['pays'];
 							$valeurPays = $pays;
@@ -126,6 +127,7 @@
 							$conn = OuvrirConnexion();
 							$req = "UPDATE tdf_coureur set".$valeurInsertion." where n_coureur =".$_POST['numCoureur'];
 							$cur = preparerRequete($conn, $req);
+							echo "$req";
 							$tab = executerRequete($cur);
 							oci_commit($conn);
 							
@@ -157,7 +159,7 @@
 				}
 			}
 		?>
-
+		<?php var_dump($_POST); ?>
 		<form name="formModCoureur" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
 			<div align="center" style="margin-left:10%; margin-right:10%">
 				
@@ -182,7 +184,6 @@
 											echo '</option>';
 										} 	
 									echo "</select> ";
-									
 									FermerConnexion($conn);
 								?>
 							</td>
