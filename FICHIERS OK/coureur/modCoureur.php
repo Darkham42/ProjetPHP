@@ -26,6 +26,7 @@
 
 			if(!isset($valeurTestSelectionCoureur))
 				$valeurTestSelectionCoureur = "";
+
 			if(!isset($valeurTestNom))
 				$valeurTestNom = "";
 
@@ -47,21 +48,19 @@
 			if(!isset($valeurParticipation))
 				$valeurParticipation = "";
 
-			if(!isset($valeurTestAjout)) {
-				$valeurTestAjout = "";
+			if(!isset($valeurTestAnneeNaissance)) {
+				$valeurTestAnneeNaissance = "";
+				$valeurPays = "";
 			}
 
-			if(!isset($valeurTestAnneeNaissance))
-				$valeurTestAnneeNaissance = "";$valeurPays = "";
-
-			if(isset($_POST['Modifierier'])) {
+			if(isset($_POST['Modifier'])) {
 
 				if($_POST['numCoureur'] != 'Selectionnez un coureur') {
 
 					if($_POST['nom'] != "" || $_POST['prenom'] != "" || $_POST['annee_naissance'] != "" || $_POST['annee_tour'] != "" || $_POST['pays'] != "") {
 						
 						$valeurInsertion = '';
-						$valeurNumCoureur = $_POST['numCoureur'];
+						$valeurNumCoureur = $_POST[''];
 
 						if($_POST['nom'] != "") {
 							if((substr($_POST['nom'], -1)) == "-" || (substr($_POST['nom'], 0 , 1)) == "-" || is_numeric($_POST['nom']) ||!ctype_alpha($_POST['nom'])) {	
@@ -170,28 +169,30 @@
 							</td>
 							<td>
 								<?php
-
 									$conn = OuvrirConnexion();
 									$req = 'select n_coureur, nom, prenom from tdf_coureur where n_coureur > 0 order by nom';
 									$cur = preparerRequete($conn, $req);
 									$tab = executerRequete($cur);
 									$nbLignes = oci_fetch_all($cur, $tab,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
 									
-									echo "<select name='coureur' size=1>";
+									echo "<select name='numCoureur' size=1>";
 										echo "<option value='Selectionnez un coureur'>Selectionnez un coureur</option>";
-										for ($i=0;$i<$nbLignes;$i++){
-										  echo '<option value="'.$tab[$i]["N_COUREUR"].'">'.$tab[$i]["NOM"]." ".utf8_encode($tab[$i]["PRENOM"]);
-										  echo '</option>';
+										for ($i=0;$i<$nbLignes;$i++) {
+											echo '<option value="'.$tab[$i]["N_COUREUR"].'">'.$tab[$i]["NOM"]." ".utf8_encode($tab[$i]["PRENOM"]);
+											echo '</option>';
 										} 	
 									echo "</select> ";
 									
 									FermerConnexion($conn);
-								?>	
+								?>
+							</td>
+							<td>
+								<font color='red'><?php echo $valeurTestSelectionCoureur; ?></font>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								Nom :
+								Nom<sup>*</sup> :
 							</td>
 							<td>
 								<input type="text" name="nom" size=32 maxlength=20 value="<?php if(isset($valeurNom)) echo $valeurNom; ?>" > 
@@ -202,7 +203,7 @@
 						</tr>
 						<tr>
 							<td>
-								Prenom :
+								Prenom<sup>*</sup> :
 							</td>
 							<td>
 								<input type="text" name="prenom" size=32 maxlength=30 value="<?php if(isset($valeurPrenom)) echo $valeurPrenom; ?>" >
@@ -213,7 +214,7 @@
 						</tr>
 						<tr>
 							<td>
-								Année de naissance :
+								Année de naissance<sup>*</sup> :
 							</td>
 							<td>
 								<select name="annee_naissance" size=1>
@@ -258,7 +259,7 @@
 						</tr>
 						<tr>
 							<td>
-								Pays :
+								Pays<sup>*</sup> :
 							</td>
 							<td>
 								<?php
@@ -291,13 +292,13 @@
 						</tr>
 						<tr>
 							<td>
-								<font size=1>Champs obligatoires</font>
+								<font size=1><sup>*</sup>Champs obligatoires</font>
 							</td>
 							<td align="center">
 								<input type='submit' name='Modifier' value='Modifier le coureur' >
 							</td>
 							<td>
-								<font color='green' size=2><b><?php echo $valeurTestAjout; ?></b></font>
+								<font color='green' size=2><b><?php echo $valeurTestModif; ?></b></font>
 							</td>
 						</tr>
 					</table>

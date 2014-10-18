@@ -20,9 +20,9 @@
 
 			<li><a href="">Sponsors</a>
 				<ul>
-					<li><a href="/CoursPHP/TDF/sponsor/form_ajout_sponsor.php">Ajout</a></li>
-					<li><a href="/CoursPHP/TDF/sponsor/form_modifier_sponsor.php">Modication</a></li>
-					<li><a href="/CoursPHP/TDF/sponsor/form_supprimer_sponsor.php">Suppression</a></li>
+					<li><a href="/CoursPHP/TDF/sponsor/addSponsor.php">Ajout</a></li>
+					<li><a href="/CoursPHP/TDF/sponsor/modSponsor.php">Modication</a></li>
+					<li><a href="/CoursPHP/TDF/sponsor/delSponsor.php">Suppression</a></li>
 				</ul>
 			</li>
 
