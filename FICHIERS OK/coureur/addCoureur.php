@@ -111,7 +111,7 @@
 						if($erreur != 1){
 
 							// N_COUREUR MAX
-							//$conn = OuvrirConnexion();
+							$conn = OuvrirConnexion();
 							$maxNCoureur = preparerRequete($conn, "SELECT max(n_coureur) as maxi from tdf_coureur");
 							$maxNcour = executerRequete($maxNCoureur);
 							

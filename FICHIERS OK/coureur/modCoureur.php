@@ -47,10 +47,14 @@
 			if(!isset($valeurParticipation))
 				$valeurParticipation = "";
 
+			if(!isset($valeurTestAjout)) {
+				$valeurTestAjout = "";
+			}
+
 			if(!isset($valeurTestAnneeNaissance))
 				$valeurTestAnneeNaissance = "";$valeurPays = "";
 
-			if(isset($_POST['modifie'])) {
+			if(isset($_POST['Modifierier'])) {
 
 				if($_POST['numCoureur'] != 'Selectionnez un coureur') {
 
@@ -79,7 +83,7 @@
 							else {
 								$valeurPrenom = $_POST['prenom'];
 								$valeurPrenom = strtolower($valeurPrenom);
-								$prenom = ucfirst($valeurPrenom);
+								$prenom = ucwords($valeurPrenom);
 
 								if($valeurInsertion == "")
 									$valeurInsertion = $valeurInsertion." prenom = '".$prenom."'";
@@ -155,20 +159,6 @@
 			}
 		?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-		
-<!-- REVOIR A PARTIR DE LA POUR L'AFFICHAGE ! -->
 		<form name="formModCoureur" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
 			<div align="center" style="margin-left:10%; margin-right:10%">
 				
@@ -304,7 +294,7 @@
 								<font size=1>Champs obligatoires</font>
 							</td>
 							<td align="center">
-								<input type='submit' name='Ajouter' value='Ajouter un coureur' >
+								<input type='submit' name='Modifier' value='Modifier le coureur' >
 							</td>
 							<td>
 								<font color='green' size=2><b><?php echo $valeurTestAjout; ?></b></font>
