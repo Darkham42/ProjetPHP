@@ -51,7 +51,7 @@
 								<?php
 
 									$conn = OuvrirConnexion();
-									$req = 'select n_coureur, nom, prenom from tdf_coureur where n_coureur in (select n_coureur from tdf_coureur minus select n_coureur from tdf_participation)';
+									$req = 'select n_coureur, nom, prenom from tdf_coureur where n_coureur > 0 and n_coureur in (select n_coureur from tdf_coureur minus select n_coureur from tdf_participation) order by nom';
 									$cur = preparerRequete($conn, $req);
 									$tab = executerRequete($cur);
 									$nbLignes = oci_fetch_all($cur, $tab,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
@@ -59,7 +59,7 @@
 									echo "<select name='coureur' size=1>";
 										echo "<option value='Selectionnez un coureur'>Selectionnez un coureur</option>";
 										for ($i=0;$i<$nbLignes;$i++){
-										  echo '<option value="'.$tab[$i]["N_COUREUR"].'">'.$tab[$i]["NOM"]." - ".utf8_encode($tab[$i]["PRENOM"]);
+										  echo '<option value="'.$tab[$i]["N_COUREUR"].'">'.$tab[$i]["NOM"]." ".utf8_encode($tab[$i]["PRENOM"]);
 										  echo '</option>';
 										} 	
 									echo "</select> ";

@@ -93,8 +93,8 @@
 									}
 							}
 							else {
-								$erreur=1;
-								$valeurTestAnneeNaissance="Veuillez entrer une date valide !";
+								$erreur = 1;
+								$valeurTestAnneeNaissance = "Veuillez entrer une date valide !";
 							}
 							
 						// PREMIERE PARTICIPATION
@@ -105,12 +105,12 @@
 						// PAYS
 							if($erreur == 1){
 								$valeurPays = $_POST['pays'];
-							}						
+							}
 						
 						if($erreur != 1){
 
 							// N_COUREUR MAX
-							$conn = OuvrirConnexion();
+							//$conn = OuvrirConnexion();
 							$maxNCoureur = preparerRequete($conn, "SELECT max(n_coureur) as maxi from tdf_coureur");
 							$maxNcour = executerRequete($maxNCoureur);
 							
