@@ -2,42 +2,35 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;">
 		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href= "menuBarre.css">
+		<link rel="stylesheet" type="text/css" href= "/CoursPHP/TDF/menuBarre.css">
 	</head>
 
-	<style type="text/CSS">
-	#menu li ul {
-		position:absolute;
-		}
-	</style>
-	
 	<body>
-		</br>
 
 		<div id="menu" style="width:1300px; margin:0 auto;">
 		<ul>
-
+		
 			<li><a href="#">Coureurs</a>
 				<ul>
-					<li><a href="coureur/addCoureur.php">Ajout</a></li>
-					<li><a href="coureur/modCoureur.php">Modification</a></li>
-					<li><a href="coureur/delCoureur.php">Suppression</a></li>
+					<li><a href="/CoursPHP/TDF/coureur/addCoureur.php">Ajout</a></li>
+					<li><a href="/CoursPHP/TDF/coureur/modCoureur.php">Modification</a></li>
+					<li><a href="/CoursPHP/TDF/coureur/delCoureur.php">Suppression</a></li>
 				</ul>
 			</li>
 
 			<li><a href="">Sponsors</a>
 				<ul>
-					<li><a href="sponsor/form_ajout_sponsor.php">Ajout</a></li>
-					<li><a href="sponsor/form_modifier_sponsor.php">Modication</a></li>
-					<li><a href="sponsor/form_supprimer_sponsor.php">Suppression</a></li>
+					<li><a href="/CoursPHP/TDF/sponsor/form_ajout_sponsor.php">Ajout</a></li>
+					<li><a href="/CoursPHP/TDF/sponsor/form_modifier_sponsor.php">Modication</a></li>
+					<li><a href="/CoursPHP/TDF/sponsor/form_supprimer_sponsor.php">Suppression</a></li>
 				</ul>
 			</li>
 
 			<li><a href="">Equipes</a>
 				<ul>
-					<li><a href="equipe/form_ajout_equipe.php">Ajout</a></li>
-					<li><a href="equipe/form_modifier_equipe.php">Modication</a></li>
-					<li><a href="equipe/form_suppression_Equipe.php">Suppression</a></li>
+					<li><a href="/CoursPHP/TDF/equipe/form_ajout_equipe.php">Ajout</a></li>
+					<li><a href="/CoursPHP/TDF/equipe/form_modifier_equipe.php">Modication</a></li>
+					<li><a href="/CoursPHP/TDF/equipe/form_suppression_Equipe.php">Suppression</a></li>
 				</ul>
 			</li>
 
@@ -78,9 +71,6 @@
 
 		</ul>
 		</div>
-		<br><br><br><br>
 
-		<hr width="80%"/>
-		
 	</body>
 </html>
