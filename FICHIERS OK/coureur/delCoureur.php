@@ -7,8 +7,9 @@
 	<body>
 
 		<?php
-				include_once ('connBDD.php');
-				include_once ('fonc_test.php');
+			include ('../menuBarre.php');
+			include_once ('../connBDD.php');
+			include_once ('../fonc_test.php');
 		?>
 
 		<h2 align="center">Suppression d'un coureur</h2>
