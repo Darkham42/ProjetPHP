@@ -135,7 +135,6 @@
 							
 							$valeurTestModif = "Modification correctement exécuté !";
 							
-							//on reinitialise les variables test
 							$valeurTestSelectionCoureur = "";
 							$valeurTestNom = "";
 							$valeurNom = "";
@@ -148,14 +147,13 @@
 						}
 						
 					}
-					else { // si aucun des champs de sont remplis
-							$valeurTestSelectionCoureur = "Veuillez au moins changer un des champs <br>ci-dessous pour modifier le coureur !";
+					else {
+							$valeurTestSelectionCoureur = "Veuillez au moins changer un des champs ci-dessous pour modifier le coureur !";
 							$valeurNumCoureur = $_POST['numCoureur'];
-						
 						}
 				}
 				else{
-					$valeurTestSelectionCoureur = "Veuillez selectionner un coureur</br>pour le modifié";
+					$valeurTestSelectionCoureur = "Aucun coureur sélectionné.";
 				}
 			}
 		?>

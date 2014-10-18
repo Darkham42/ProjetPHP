@@ -123,13 +123,27 @@
 							$numCoureur = $maxNumArray['MAXI'][0];
 							$numCoureur = $numCoureur+5;
 							
-							// INSERTION
+							/// INSERTION
 							$req = "INSERT INTO tdf_coureur(n_coureur, nom, prenom, annee_naissance, annee_tdf, code_tdf,compte_oracle, date_insert) values($numCoureur,'".$nom."','".$prenom."','".$_POST['annee_naissance']."','".$_POST['annee_tour']."','".$_POST['pays']."',user, sysdate)";
-							$cur = preparerRequete($conn, $req);
+							$reqTEST = "SELECT nom, prenom, code_tdf FROM vt_coureur WHERE nom = '".$nom."' and prenom = '".$prenom."' and code_tdf = '".$_POST['pays']."' ";
+
+							$cur = preparerRequete($conn, $reqTEST);
 							$tab = executerRequete($cur);
-							oci_commit($conn);
-							$valeurTestAjout = "Votre coureur a été ajouté avec succès à la BDD.";
-							
+
+							$nbLignesBDD = oci_fetch_all($cur, $tab,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
+
+							if ($nbLignesBDD == 0) {
+								$cur2 = preparerRequete($conn, $req);
+								$tab = executerRequete($cur2);
+								oci_commit($conn);
+								$valeurTestAjout = "Votre coureur a été ajouté avec succès à la BDD.";
+							}
+							else {
+								$erreur = 1;
+								$valeurTestAjout = "Votre coureur existe déjà.";
+							}							
+
+
 							// Remise à 0 du form
 							$valeurNom = "";
 							$valeurPrenom = "";
