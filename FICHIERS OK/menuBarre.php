@@ -36,17 +36,17 @@
 
 			<li><a href="">Pays</a>
 				<ul>
-					<li><a href="/CoursPHP/TDF/annee/addAnnee.php">Ajouter</a></li>
-					<li><a href="/CoursPHP/TDF/annee/modAnnee.php">Modification</a></li>
-					<li><a href="/CoursPHP/TDF/annee/modAnnee.php">Suppression</a></li>
+					<li><a href="/CoursPHP/TDF/pays/addPays.php">Ajouter</a></li>
+					<li><a href="/CoursPHP/TDF/pays/modPays.php">Modification</a></li>
+					<li><a href="/CoursPHP/TDF/pays/delPays.php">Suppression</a></li>
 				</ul>
 			</li>
 
 			<li><a href="">Directeur</a>
 				<ul>
-					<li><a href="/CoursPHP/TDF/annee/addAnnee.php">Ajouter</a></li>
-					<li><a href="/CoursPHP/TDF/annee/modAnnee.php">Modification</a></li>
-					<li><a href="/CoursPHP/TDF/annee/modAnnee.php">Suppression</a></li>
+					<li><a href="/CoursPHP/TDF/directeur/addDirecteur.php">Ajouter</a></li>
+					<li><a href="/CoursPHP/TDF/directeur/modDirecteur.php">Modification</a></li>
+					<li><a href="/CoursPHP/TDF/directeur/delDirecteur.php">Suppression</a></li>
 				</ul>
 			</li>
 
@@ -60,24 +60,24 @@
 
 			<li><a href="">Equipe Années</a>
 				<ul>
-					<li><a href="ajout_Equipe_Annee.php">Ajout</a></li>
-					<li><a href="modification_Equipe_Annee.php">Modication</a></li>
-					<li><a href="supprimer_Equipe_Annee.php">Suppression</a></li>
+					<li><a href="/CoursPHP/TDF/equipeAnnee/addEquipAnnee.php">Ajout</a></li>
+					<li><a href="/CoursPHP/TDF/equipeAnnee/modEquipAnnee.php">Modication</a></li>
+					<li><a href="/CoursPHP/TDF/equipeAnnee/delEquipAnnee.php">Suppression</a></li>
 				</ul>
 			</li>
 			<li><a href="">Participations</a>
 				<ul>
-					<li><a href="#">Ajout</a></li>
-					<li><a href="#">Modication</a></li>
-					<li><a href="#">Suppression</a></li>
+					<li><a href="/CoursPHP/TDF/participation/addParticipation.php">Ajout</a></li>
+					<li><a href="/CoursPHP/TDF/participation/modParticipation.php">Modication</a></li>
+					<li><a href="/CoursPHP/TDF/participation/delParticipation.php">Suppression</a></li>
 				</ul>
 			</li>
 
 			<li><a href="">Epreuves</a>
 				<ul>
-					<li><a href="ajout_Epreuve.php">Ajout</a></li>
-					<li><a href="modification_Epreuve.php">Modification</a></li>
-					<li><a href="supprimer_Epreuve.php">Suppression</a></li>
+					<li><a href="/CoursPHP/TDF/epreuves/addEpreuve.php">Ajout</a></li>
+					<li><a href="/CoursPHP/TDF/epreuves/modEpreuve.php">Modification</a></li>
+					<li><a href="/CoursPHP/TDF/epreuves/delEpreuve.php">Suppression</a></li>
 				</ul>
 			</li>
 

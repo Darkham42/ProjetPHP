@@ -52,7 +52,7 @@
 								<?php
 
 									$conn = OuvrirConnexion();
-									$req = 'select annee from vt_annee where annee in (select annee from vt_annee minus select annee from tdf_participation) order by annee DESC';
+									$req = 'SELECT annee from vt_annee where annee in (select annee from vt_annee minus select annee from tdf_participation) order by annee DESC';
 									$cur = preparerRequete($conn, $req);
 									$tab = executerRequete($cur);
 									$nbLignes = oci_fetch_all($cur, $tab,0,-1,OCI_FETCHSTATEMENT_BY_ROW);

@@ -65,7 +65,7 @@
 						// NOM
 							if(!testNom($_POST['nom'])) {
 								$erreur = 1;
-								$valeurTestNom="Veuillez entrer un nom valide !";
+								$valeurTestNom="Veuillez saisir un nom valide.";
 							}
 							else {
 								$valeurNom = testNom($_POST['nom']);
@@ -75,7 +75,7 @@
 						// PRENOM
 							if(!testPrenom($_POST['prenom'])) {
 								$erreur = 1;
-								$valeurTestPrenom = "Veuillez entrer un prénom valide !";
+								$valeurTestPrenom = "Veuillez saisir un prénom valide.";
 							}
 
 							$valeurPrenom = testPrenom($_POST['prenom']);						
@@ -92,13 +92,13 @@
 									}
 
 									else {
-										$valeurTestAnneeNaissance = "Impossible de participer au TDF si vous n'êtes pas né !";
+										$valeurTestAnneeNaissance = "Impossible de participer au TDF si vous n'êtes pas né...";
 										$erreur = 1;
 									}
 							}
 							else {
 								$erreur = 1;
-								$valeurTestAnneeNaissance = "Veuillez entrer une date valide !";
+								$valeurTestAnneeNaissance = "Veuillez entrer une date valide.";
 							}
 
 						// PREMIERE PARTICIPATION						
@@ -132,7 +132,7 @@
 							
 							FermerConnexion($conn);
 							
-							$valeurTestModif = "Modification correctement exécuté !";
+							$valeurTestModif = "Modification correctement exécuté.";
 							
 							$valeurTestSelectionCoureur = "";
 							$valeurTestNom = "";
@@ -147,7 +147,7 @@
 						
 					}
 					else {
-							$valeurTestSelectionCoureur = "Veuillez au moins changer un des champs ci-dessous pour modifier le coureur !";
+							$valeurTestSelectionCoureur = "Veuillez au moins changer un des champs pour modifier le coureur.";
 							$valeurNumCoureur = $_POST['numCoureur'];
 						}
 				}
@@ -169,7 +169,7 @@
 							<td>
 								<?php
 									$conn = OuvrirConnexion();
-									$req = 'select n_coureur, nom, prenom from tdf_coureur where n_coureur > 0 order by nom';
+									$req = 'SELECT n_coureur, nom, prenom from tdf_coureur where n_coureur > 0 order by nom';
 									$cur = preparerRequete($conn, $req);
 									$tab = executerRequete($cur);
 									$nbLignes = oci_fetch_all($cur, $tab,0,-1,OCI_FETCHSTATEMENT_BY_ROW);

@@ -61,7 +61,7 @@
 						// NOM
 							if(!testNom($_POST['nom'])) {
 								$erreur = 1;
-								$valeurTestNom="Veuillez entrer un nom valide !";
+								$valeurTestNom="Veuillez saisir un nom valide.";
 							}
 							else {
 								$valeurNom = testNom($_POST['nom']);
@@ -72,7 +72,7 @@
 						// PRENOM
 							if(!testPrenom($_POST['prenom'])) {
 								$erreur = 1;
-								$valeurTestPrenom = "Veuillez entrer un prénom valide !";
+								$valeurTestPrenom = "Veuillez saisir un prénom valide.";
 							}
 
 							$valeurPrenom = testPrenom($_POST['prenom']);
@@ -89,13 +89,13 @@
 									}
 
 									else {
-										$valeurTestAnneeNaissance = "Impossible de participer au TDF si vous n'êtes pas né !";
+										$valeurTestAnneeNaissance = "Impossible de participer au TDF si vous n'êtes pas né...";
 										$erreur = 1;
 									}
 							}
 							else {
 								$erreur = 1;
-								$valeurTestAnneeNaissance = "Veuillez entrer une date valide !";
+								$valeurTestAnneeNaissance = "Veuillez entrer une date valide.";
 							}
 							
 						// PREMIERE PARTICIPATION
@@ -124,8 +124,8 @@
 							$numCoureur = $numCoureur+5;
 							
 							/// INSERTION
-							$req = "INSERT INTO tdf_coureur(n_coureur, nom, prenom, annee_naissance, annee_tdf, code_tdf,compte_oracle, date_insert) values($numCoureur,'".toSQL($nom)."','".toSQL($prenom)."','".$_POST['annee_naissance']."','".$_POST['annee_tour']."','".$_POST['pays']."',user, sysdate)";
-							$reqTEST = "SELECT nom, prenom, code_tdf FROM vt_coureur WHERE nom = '".toSQL($nom)."' and prenom = '".toSQL($prenom)."' and code_tdf = '".$_POST['pays']."' ";
+							$req = "INSERT INTO tdf_coureur(n_coureur, nom, prenom, annee_naissance, annee_tdf, code_tdf,compte_oracle, date_insert) values($numCoureur,'".$nom."','".$prenom."','".$_POST['annee_naissance']."','".$_POST['annee_tour']."','".$_POST['pays']."',user, sysdate)";
+							$reqTEST = "SELECT nom, prenom, code_tdf FROM vt_coureur WHERE nom = '".$nom."' and prenom = '".$prenom."' and code_tdf = '".$_POST['pays']."' ";
 
 							$cur = preparerRequete($conn, $reqTEST);
 							$tab = executerRequete($cur);
@@ -157,14 +157,14 @@
 				else {
 						
 						if(empty($_POST['nom'])) {
-							$valeurTestNom = "Veuillez entrer un nom valide !";
+							$valeurTestNom = "Veuillez saisir un nom valide.";
 						}
 						else {
 							$valeurNom = $_POST['nom'];
 						}
 							
 						if(empty($_POST['prenom'])) {
-							$valeurTestPrenom = "Veuillez entrer un prénom valide !";
+							$valeurTestPrenom = "Veuillez saisir un prénom valide.";
 						}
 						else {
 							$valeurPrenom = $_POST['prenom'];
@@ -179,7 +179,7 @@
 						}
 						
 						if($_POST['pays'] == "Selectionnez un pays") {
-								$valeurTestPays = "Veuillez choisir un pays !";
+							$valeurTestPays = "Veuillez choisir un pays.";
 						}
 						else {
 							$valeurPays = $_POST['pays'];
