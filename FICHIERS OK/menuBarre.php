@@ -34,7 +34,31 @@
 				</ul>
 			</li>
 
-			<li><a href="">Années</a>
+			<li><a href="">Pays</a>
+				<ul>
+					<li><a href="/CoursPHP/TDF/annee/addAnnee.php">Ajouter</a></li>
+					<li><a href="/CoursPHP/TDF/annee/modAnnee.php">Modification</a></li>
+					<li><a href="/CoursPHP/TDF/annee/modAnnee.php">Suppression</a></li>
+				</ul>
+			</li>
+
+			<li><a href="">Directeur</a>
+				<ul>
+					<li><a href="/CoursPHP/TDF/annee/addAnnee.php">Ajouter</a></li>
+					<li><a href="/CoursPHP/TDF/annee/modAnnee.php">Modification</a></li>
+					<li><a href="/CoursPHP/TDF/annee/modAnnee.php">Suppression</a></li>
+				</ul>
+			</li>
+
+			<li><a href="">Année</a>
+				<ul>
+					<li><a href="/CoursPHP/TDF/annee/addAnnee.php">Ajouter</a></li>
+					<li><a href="/CoursPHP/TDF/annee/modAnnee.php">Modification</a></li>
+					<li><a href="/CoursPHP/TDF/annee/delAnnee.php">Suppression</a></li>
+				</ul>
+			</li>
+
+			<li><a href="">Equipe Années</a>
 				<ul>
 					<li><a href="ajout_Equipe_Annee.php">Ajout</a></li>
 					<li><a href="modification_Equipe_Annee.php">Modication</a></li>
@@ -54,18 +78,6 @@
 					<li><a href="ajout_Epreuve.php">Ajout</a></li>
 					<li><a href="modification_Epreuve.php">Modification</a></li>
 					<li><a href="supprimer_Epreuve.php">Suppression</a></li>
-				</ul>
-			</li>
-
-			<li><a href="">En plus</a>
-				<ul>
-					<li><a href="ajout_Annee.php">Ajouter une année</a></li>
-					<li><a href="modification_Annee.php">Modification d'une année</a></li>
-					<li><a href="ajout_Directeur.php">Ajouter un directeur</a></li>
-					<li><a href="modification_Directeur.php">Modifier un directeur</a></li>
-					<li><a href="suppression_Directeur.php">Supprimer un directeur</a></li>
-					<li><a href="ajout_Pays.php">Ajouter un pays</a></li>
-					<li><a href="suppression_Pays.php">Supprimer un pays</a></li>
 				</ul>
 			</li>
 

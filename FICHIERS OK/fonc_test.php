@@ -33,6 +33,7 @@
 		$fchar3 = '/\'\'+/';
 		$fchar4 = '/  +/';
 		$fchar5 = '/1|2|3|4|5|6|7|8|9|0/';
+		$fchar6 = '/€|\$|£|@/';
 		$tchar1 = '';
 		$tchar2 = '--';
 		$tchar3 = '\'';
@@ -49,7 +50,7 @@
 		}
 
 		if(preg_match($fchar3,$var) == 1) {
-			$var = preg_replace($fchar3,$tchar,$var);
+			$var = preg_replace($fchar3,$tchar3,$var);
 		}
 
 		if(preg_match($fchar4,$var) == 1) {
@@ -58,6 +59,11 @@
 
 		while(preg_match($fchar5,$var) == 1) {
 			$var = preg_replace($fchar5,$tchar1,$var);
+		}
+
+		//spec chars
+		while(preg_match($fchar6,$var) == 1) {
+			$var = preg_replace($fchar6,$tchar1,$var);
 		}
 
 		$var = maj($var);

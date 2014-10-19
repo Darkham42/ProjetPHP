@@ -2,8 +2,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;">
 		<meta charset="utf-8">
-		<link rel="icon" type="image/png" href="favicon.ico" />
-		<title>Suppression d'un coureur || Mise à jour TDF</title>
+		<title>Ajouter un sponsor au Tour de France</title>
 	</head>
 	<body>
 
@@ -13,7 +12,10 @@
 			include_once ('../fonc_test.php');
 		?>
 
-	<h2 align="center">Suppression d'un coureur</h2>
+		<h2 align="center">Ajout d'un sponsor</h2>
+
+	<!-- FORMULAIRE POUR MODIFIER UN COUREUR DE LA BASE -->
+
 <?php
 if(!isset($valeurTestEquipe)){
 				$valeurTestEquipe="";	
@@ -63,10 +65,7 @@ if(!isset($valeurTestEquipe)){
 					}
 					
 					//requete 
-					$login = 'copie_tdf';
-					$mdp = 'copie_tdf';
-					$instance = 'xe';
-					$conn = OuvrirConnexion($login, $mdp,$instance);
+					$conn = OuvrirConnexion();
 					$req = "select max(n_sponsor)+1 as nb_sponsor from tdf_sponsor where n_equipe=".$_POST['equipe']." group by n_equipe";
 					$cur = preparerRequete($conn, $req);
 					$tab1 = executerRequete($cur);
@@ -75,15 +74,14 @@ if(!isset($valeurTestEquipe)){
 					oci_fetch_all($cur,$maxNumSponsor);
 					$numSponsor=$maxNumSponsor['NB_SPONSOR'][0];
 					//requete ajout
-					$login = 'copie_tdf';
-					$mdp = 'copie_tdf';
-					$instance = 'xe';
-					$conn = OuvrirConnexion($login, $mdp,$instance);
+					$conn = OuvrirConnexion();
 					$req = "insert into tdf_sponsor (n_equipe,n_sponsor,nom,na_sponsor,code_tdf,annee_sponsor,compte_oracle,date_insert) values (".$_POST['equipe'].",".$numSponsor.",'".$nom."','".$tag."','".$_POST['pays']."',".$_POST['annee'].",user,sysdate)";
 					$cur = preparerRequete($conn, $req);
 					$tab = executerRequete($cur);
 					oci_commit($conn);
+
 					FermerConnexion($conn);
+					
 					$valeurTestEquipe="";
 				}
 				else{

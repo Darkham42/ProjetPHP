@@ -14,7 +14,7 @@
 
 		<h2 align="center">Suppression d'un coureur</h2>
 		
-	<!-- FORMULAIRE SUPPRESSION D'UN' COUREUR -->
+	<!-- FORMULAIRE SUPPRESSION D'UN COUREUR -->
 
 		<?php
 			if(!isset($valeurTestCoureur)) {

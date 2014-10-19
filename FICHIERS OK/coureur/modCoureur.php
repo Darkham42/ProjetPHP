@@ -69,7 +69,7 @@
 							}
 							else {
 								$valeurNom = testNom($_POST['nom']);
-								$valeurInsertion = $valeurInsertion." nom = '".$valeurNom."'";
+								$valeurInsertion = $valeurInsertion." nom = '".toSQL($valeurNom)."'";
 							}
 						
 						// PRENOM
@@ -79,7 +79,7 @@
 							}
 
 							$valeurPrenom = testPrenom($_POST['prenom']);						
-							$valeurInsertion = $valeurInsertion.", prenom = '".$valeurPrenom."'";
+							$valeurInsertion = $valeurInsertion.", prenom = '".toSQL($valeurPrenom)."'";
 						
 						// ANNEE
 							if($_POST['annee_naissance'] != null) {
@@ -127,7 +127,6 @@
 							$conn = OuvrirConnexion();
 							$req = "UPDATE tdf_coureur set".$valeurInsertion." where n_coureur =".$_POST['numCoureur'];
 							$cur = preparerRequete($conn, $req);
-							echo "$req";
 							$tab = executerRequete($cur);
 							oci_commit($conn);
 							
@@ -157,7 +156,7 @@
 				}
 			}
 		?>
-		<?php var_dump($_POST); ?>
+		
 		<form name="formModCoureur" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
 			<div align="center" style="margin-left:10%; margin-right:10%">
 				
