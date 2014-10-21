@@ -121,18 +121,34 @@
 								$valeurInsertion = $valeurInsertion.", code_tdf = '".$pays."'";
 						}
 						
+						// Longueur
+							if (strlen($valeurPrenom) > 30 || strlen($valeurNom) > 20 ) {
+								$erreur = 1;
+								$valeurTestModif = "Nombre de charactères incorects."; 
+							}
 						
+						// MODIFICATION
 						if($erreur != 1) {
 
 							$conn = OuvrirConnexion();
 							$req = "UPDATE tdf_coureur set".$valeurInsertion." where n_coureur =".$_POST['numCoureur'];
-							$cur = preparerRequete($conn, $req);
+							$reqTEST = "SELECT nom, prenom, code_tdf FROM vt_coureur WHERE nom = '".toSQL($valeurNom)."' and prenom = '".toSQL($valeurPrenom)."' and code_tdf = '".$_POST['pays']."' ";
+							
+							$cur = preparerRequete($conn, $reqTEST);
 							$tab = executerRequete($cur);
-							oci_commit($conn);
-							
-							FermerConnexion($conn);
-							
-							$valeurTestModif = "Modification correctement exécuté.";
+
+							$nbLignesBDD = oci_fetch_all($cur, $tab,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
+
+							if ($nbLignesBDD == 0) {
+								$cur2 = preparerRequete($conn, $req);
+								$tab = executerRequete($cur2);
+								oci_commit($conn);
+								$valeurTestModif = "Votre coureur a été modifié avec succès de la BDD.";
+							}
+							else {
+								$erreur = 1;
+								$valeurTestModif = "Votre coureur existe déjà.";
+							}
 							
 							$valeurTestSelectionCoureur = "";
 							$valeurTestNom = "";
@@ -143,6 +159,8 @@
 							$valeurAnnee = "";
 							$valeurParticipation = "";
 							$valeurPays = "";
+
+							FermerConnexion($conn);
 						}
 						
 					}

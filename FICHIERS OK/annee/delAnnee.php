@@ -29,7 +29,7 @@
 				
 				else {
 					$conn = OuvrirConnexion();
-					$req = "delete from vt_annee where annee='".$_POST['annee']."'";
+					$req = "DELETE from vt_annee where annee='".$_POST['annee']."'";
 					$cur = preparerRequete($conn, $req);
 					$tab = executerRequete($cur);
 					oci_commit($conn);

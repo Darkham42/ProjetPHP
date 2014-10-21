@@ -50,7 +50,8 @@
 						$erreur = 1;
 						$valeurTestRepos = "Valeur invalide.";
 					}
-						
+					
+					//MODIFICATION
 					if($erreur != 1) {
 						
 						$conn = OuvrirConnexion();

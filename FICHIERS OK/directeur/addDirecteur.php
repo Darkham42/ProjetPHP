@@ -55,21 +55,28 @@
 						$valeurPrenom = testPrenom($_POST['prenom']);
 						$prenom = $valeurPrenom;
 					}
+
+					// Longueur
+
+							if (strlen($prenom) > 30 || strlen($nom) > 20 ) {
+								$erreur = 1;
+							}
 					
 					if($erreur != 1) {
 						$conn = OuvrirConnexion();
 						
-						// On récupère le max du nmbre de directeur
+						// Max nbr directeur
 						$reqMax = "SELECT max(n_directeur) AS MAXI FROM tdf_directeur";
 						$cur = preparerRequete($conn, $reqMax);
 						$tab = executerRequete($cur);
 						$maxNumDirecteur = array();
 						oci_fetch_all($cur,$maxNumDirecteur);
 						$num=$maxNumDirecteur['MAXI'][0];
-						// On souhaite que le nouveau directeur soit le max +1
+
+						// Nouveau directeur = max +1
 						$num = $num + 1;
 						
-						$reqINS = "INSERT INTO TDF_DIRECTEUR(n_directeur, nom, prenom, compte_oracle, date_insert) values ($num,'".$nom."','".$prenom."', user, sysdate)";
+						$reqINS = "INSERT INTO TDF_DIRECTEUR(n_directeur, nom, prenom, compte_oracle, date_insert) values ($num,'".toSQL($nom)."','".toSQL($prenom)."', user, sysdate)";
 						
 						$cur = preparerRequete($conn, $reqINS);
 						$tab = executerRequete($cur);

@@ -33,13 +33,13 @@
 				$valeurTestModif = "";
 			}
 
-			if(!isset($valeurTestNum)) {
-				$valeurTestNum = "";
+			if(!isset($valeurTestNumero)) {
+				$valeurTestNumero = "";
 			}
 
-			if(isset($_POST['MODIFIER'])) {
+			if(isset($_POST['Modifier'])) {
 				
-				if($_POST['num'] != "") {
+				if($_POST['Numero'] != "") {
 					if($_POST['nom'] != "" || $_POST['prenom'] != "" ) {
 						
 						$erreur = 0;
@@ -62,17 +62,20 @@
 						else {
 							$valeurPrenom = testPrenom($_POST['prenom']);
 							$prenom = $valeurPrenom;
-							if($valeurInsertion == "")
-								// MODIFIER SEULEMENT LE PRENOM
-									$valeurInsertion = $valeurInsertion." prenom = '".$prenom."'";
-							else
-									$valeurInsertion = $valeurInsertion.", prenom = '".$prenom."'";
+							$valeurInsertion = $valeurInsertion.", prenom = '".toSQL($prenom)."'";
 						}
 
+						// Longueur
+							if (strlen($valeurPrenom) > 30 || strlen($valeurNom) > 20 ) {
+								$erreur = 1;
+								$valeurTestModif = "Nombre de charactères incorects."; 
+							}
+
+						// MODIFICATION
 						if($erreur != 1) {
 
 							$conn = OuvrirConnexion();
-							$req = "INSERT INTO TDF_DIRECTEUR(n_directeur, nom, prenom) values ($num,$nom,$prenom.)";
+							$req = "UPDATE TDF_DIRECTEUR set".$valeurInsertion." where n_directeur =".$_POST['Numero'];
 							$cur = preparerRequete($conn, $req);
 							$tab = executerRequete($cur);
 							oci_commit($conn);
@@ -83,12 +86,13 @@
 						}
 						
 					}
-					else{
-						$valeurTestNum = "Veuillez modifier au moins un champs.";
-						$valeurNum = $_POST['num'];
+					else {
+						$valeurTestNumero = "Veuillez modifier au moins un champs.";
+						$valeurNumero = $_POST['Numero'];
 					}
-				}else{
-					$valeurTestNum = "Veuillez choisir le directeur à modifier.";
+				}
+				else {
+					$valeurTestNumero = "Veuillez choisir le directeur à modifier.";
 				}
 			}
 		?>
@@ -107,14 +111,13 @@
 									$req = 'SELECT n_directeur, nom, prenom from tdf_directeur order by nom, prenom';
 									$cur = preparerRequete($conn, $req);
 									$tab = executerRequete($cur);
-									FermerConnexion($conn);
 									$nbLignes = oci_fetch_all($cur, $tab,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
 									
-									echo "<select name='num' size=1>";
+									echo "<select name='Numero' size=1>";
 										echo "<option value=''>Selectionnez un directeur</option>";
 										for ($i=0;$i<$nbLignes;$i++) {
 
-											if($tab[$i]["N_DIRECTEUR"] == $valeurNum) {
+											if($tab[$i]["N_DIRECTEUR"] == $valeurNumero) {
 											echo '<option value="'.$tab[$i]["N_DIRECTEUR"].'" selected>'.$tab[$i]["NOM"].' - '.$tab[$i]["PRENOM"];
 											}
 											else {
@@ -123,10 +126,11 @@
 										  echo '</option>';
 										} 	
 									echo "</select> ";
+									FermerConnexion($conn);
 								?>
 							</td>
 							<td>
-								<font color="red"><?php echo $valeurTestNum; ?></font>
+								<font color="red"><?php echo $valeurTestNumero; ?></font>
 							</td>
 						</tr>
 						<tr>

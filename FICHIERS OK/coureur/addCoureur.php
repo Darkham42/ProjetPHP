@@ -55,7 +55,7 @@
 
 			if(isset($_POST['Ajouter'])) {
 
-				// Champs remplis ?
+				// Champs remplis verif
 				if($_POST['nom'] != null && $_POST['prenom'] != null && $_POST['pays'] != "Selectionnez un pays") {	
 						
 						// NOM
@@ -77,7 +77,7 @@
 
 							$valeurPrenom = testPrenom($_POST['prenom']);
 							$prenom = $valeurPrenom;						
-							$prenom=utf8_decode($prenom);
+							$prenom = $prenom;
 						
 						// ANNEE
 							if($_POST['annee_naissance'] != null) {
@@ -108,6 +108,13 @@
 								$valeurPays = $_POST['pays'];
 							}
 						
+						// Longueur
+
+							if (strlen($prenom) > 30 || strlen($nom) > 20 ) {
+								$erreur = 1;
+								$valeurTestAjout = "Nombre de charactères incorects."; 
+							}
+
 						if($erreur != 1){
 
 							// N_COUREUR MAX
@@ -122,10 +129,10 @@
 							// +1 coureur
 							$numCoureur = $maxNumArray['MAXI'][0];
 							$numCoureur = $numCoureur+5;
-							
-							/// INSERTION
-							$req = "INSERT INTO tdf_coureur(n_coureur, nom, prenom, annee_naissance, annee_tdf, code_tdf,compte_oracle, date_insert) values($numCoureur,'".$nom."','".$prenom."','".$_POST['annee_naissance']."','".$_POST['annee_tour']."','".$_POST['pays']."',user, sysdate)";
-							$reqTEST = "SELECT nom, prenom, code_tdf FROM vt_coureur WHERE nom = '".$nom."' and prenom = '".$prenom."' and code_tdf = '".$_POST['pays']."' ";
+
+							// INSERTION
+							$req = "INSERT INTO tdf_coureur(n_coureur, nom, prenom, annee_naissance, annee_tdf, code_tdf,compte_oracle, date_insert) values($numCoureur,'".toSQL($nom)."','".toSQL($prenom)."','".$_POST['annee_naissance']."','".$_POST['annee_tour']."','".$_POST['pays']."',user, sysdate)";
+							$reqTEST = "SELECT nom, prenom, code_tdf FROM vt_coureur WHERE nom = '".toSQL($nom)."' and prenom = '".toSQL($prenom)."' and code_tdf = '".$_POST['pays']."' ";
 
 							$cur = preparerRequete($conn, $reqTEST);
 							$tab = executerRequete($cur);
@@ -141,8 +148,7 @@
 							else {
 								$erreur = 1;
 								$valeurTestAjout = "Votre coureur existe déjà.";
-							}							
-
+							}
 
 							// Remise à 0 du form
 							$valeurNom = "";

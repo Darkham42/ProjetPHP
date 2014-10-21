@@ -1,10 +1,21 @@
 <?php
 
-	// Fonction retirant les accents-----------------------
+	// Fonctions retirant les accents----------------------
+	// Trouvés sur développez.net
 
-	function retireAccents($string) {
-		return $string=utf8_encode(strtr(utf8_decode($string),utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'),
-	utf8_decode('aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY')));
+	function retireAcc($string) {
+		return $string = utf8_encode(strtr(utf8_decode($string),utf8_decode("ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚŬÛÜùúûüÿÑñ"),
+			utf8_decode("AAAAAAaaaaaaOOOOOOooooooEEEEeeeeCcIIIIiiiiUUUUUuuuuyNn")));
+
+   }
+
+	function retireAccMAJ($string){
+		return $string=utf8_encode(strtr(utf8_decode($string),utf8_decode("ÀÁÂÃÄÅÒÓÔÕÖØÈÉÊËÇÌÍÎÏÙÚŬÛÜÑ"),
+			utf8_decode("AAAAAAOOOOOOEEEECIIIIUUUUUN")));
+	}
+
+	function toSQL($string){
+		return utf8_decode(str_replace(array("\'","'"), "''", $string));
 	}
 
 	// Met en majuscule------------------------------------
@@ -33,13 +44,13 @@
 		$fchar3 = '/\'\'+/';
 		$fchar4 = '/  +/';
 		$fchar5 = '/1|2|3|4|5|6|7|8|9|0/';
-		$fchar6 = '/€|\$|£|@/';
+		$fchar6 = '/€|\$|£|@|\?|\&|\||\æ|\!/';
 		$tchar1 = '';
 		$tchar2 = '--';
 		$tchar3 = '\'';
 		$tchar4 = '" "';
 		
-		$var = retireAccents($var);
+		$var = retireAccMAJ($var);
 
 		while(preg_match($fchar1,$var) == 1) {
 			$var = preg_replace($fchar1,$tchar1,$var);
@@ -61,14 +72,13 @@
 			$var = preg_replace($fchar5,$tchar1,$var);
 		}
 
-		//spec chars
 		while(preg_match($fchar6,$var) == 1) {
 			$var = preg_replace($fchar6,$tchar1,$var);
 		}
 
 		$var = maj($var);
 		$var2 = preg_replace('/-|\'| /','',$var);
-		$var2 = retireAccents($var2);
+		$var2 = retireAcc($var2);
 
 		if(ctype_alpha($var2) == true) {
 			return $var;
@@ -76,23 +86,27 @@
 		else {
 			return false;
 		}
+
+		if (strlen(var2) > 30) {
+			$erreur = 1;
+		}
 	}
 
 	// Fonction testant le nom-----------------------------
 
 	function testNom($var) {
 
-	$var = retireAccents($var);
+	$var = retireAcc($var);
 	$fchar1 = '/^-|-$|^\'|\'$|^ | $/';
 	$fchar2 = '/---+/';
 	$fchar3 = '/\'\'+/';
 	$fchar4 = '/  +/';
 	$fchar5 = '/1|2|3|4|5|6|7|8|9|0/';
+	$fchar6 = '/€|\$|£|@|\?|\&|\||\æ|\!/';
 	$tchar1 = '';
 	$tchar2 = '--';
 	$tchar3 = '\'';
-	$tchar4 = '\'\'';
-	$tchar5 = '" "';
+	$tchar4 = '" "';
 	
 		while(preg_match($fchar1,$var) == 1) {
 			$var=preg_replace($fchar1,$tchar1,$var);
@@ -106,15 +120,19 @@
 			$var=preg_replace($fchar3,$tchar3,$var);
 		}
 		if(preg_match('/\'/',$var) == 1) {
-			$var=preg_replace('/\'/',$tchar4,$var);
+			$var=preg_replace('/\'/',$tchar3,$var);
 		}
 
 		if(preg_match($fchar4,$var) == 1) {
-			$va = preg_replace($fchar4,$tchar5,$var);
+			$var = preg_replace($fchar4,$tchar4,$var);
 		}
 
 		while(preg_match($fchar5,$var) == 1) {
 			$var = preg_replace($fchar5,$tchar1,$var);
+		}
+
+		while(preg_match($fchar6,$var) == 1) {
+			$var = preg_replace($fchar6,$tchar1,$var);
 		}
 
 		$var = maj($var);

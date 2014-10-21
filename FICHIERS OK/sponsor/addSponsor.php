@@ -14,7 +14,7 @@
 
 		<h2 align="center">Ajout d'un sponsor</h2>
 
-	<!-- FORMULAIRE POUR MODIFIER UN COUREUR DE LA BASE -->
+	<!-- FORMULAIRE POUR AJOUTER UN SPONSOR A LA BASE -->
 
 <?php
 if(!isset($valeurTestEquipe)){
@@ -35,7 +35,7 @@ if(!isset($valeurTestEquipe)){
 ?>
 <?php
 			//on analyse l'enregistrement
-			if(isset($_POST['AjouterSponsor'])){
+			if(isset($_POST['Ajouter'])){
 				//on test si les champs ont bien été rempli
 				if(($_POST['equipe'] != "Selectionnez une equipe")&&($_POST['nom'] != "")&&($_POST['tag'] != "")&&($_POST['annee'] != "Selectionnez une annee")){
 					//traitement de l'ajout
@@ -112,10 +112,7 @@ if(!isset($valeurTestEquipe)){
 							</td>
 							<td>
 								<?php
-									$login = 'copie_tdf';
-									$mdp = 'copie_tdf';
-									$instance = 'xe';
-									$conn = OuvrirConnexion($login, $mdp,$instance);
+									$conn = OuvrirConnexion();
 									$req = 'select n_equipe,nom from tdf_equipe join tdf_sponsor using (n_equipe) where annee_disparition is null and (n_equipe,n_sponsor) in (select n_equipe,max(n_sponsor) as dernier_sponsor from tdf_sponsor group by n_equipe) order by nom';
 									$cur = preparerRequete($conn, $req);
 									$tab2 = executerRequete($cur);
@@ -164,10 +161,7 @@ if(!isset($valeurTestEquipe)){
 							</td>
 							<td>
 								<?php
-									$login = 'copie_tdf';
-									$mdp = 'copie_tdf';
-									$instance = 'xe';
-									$conn = OuvrirConnexion($login, $mdp,$instance);
+									$conn = OuvrirConnexion();
 									$req = 'SELECT code_tdf, c_pays, nom from TDF_PAYS order by nom';
 									$cur = preparerRequete($conn, $req);
 									$tab3 = executerRequete($cur);
@@ -195,24 +189,20 @@ if(!isset($valeurTestEquipe)){
 							</td>
 							<td>
 							<?php
-									$login = 'copie_tdf';
-									$mdp = 'copie_tdf';
-									$instance = 'xe';
-									$conn = OuvrirConnexion($login, $mdp,$instance);
-									$req = 'select unique(annee_sponsor) from tdf_sponsor order by annee_sponsor desc';
-									$cur = preparerRequete($conn, $req);
-									$tab3 = executerRequete($cur);
-									FermerConnexion($conn);
-									$nbLignes = oci_fetch_all($cur, $tab3,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
-									
-									echo "<select name='annee' size=1>";
-										echo "<option value=''>Selectionnez une annee</option>";
-										for ($i=0;$i<$nbLignes;$i++){
-										  echo '<option value="'.$tab3[$i]["ANNEE_SPONSOR"].'">'.$tab3[$i]["ANNEE_SPONSOR"];
-										  echo '</option>';
-										} 	
-									echo "</select> ";
-									
+								$conn = OuvrirConnexion();
+								$req = 'select unique(annee_sponsor) from tdf_sponsor order by annee_sponsor desc';
+								$cur = preparerRequete($conn, $req);
+								$tab3 = executerRequete($cur);
+								FermerConnexion($conn);
+								$nbLignes = oci_fetch_all($cur, $tab3,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
+								
+								echo "<select name='annee' size=1>";
+									echo "<option value=''>Selectionnez une annee</option>";
+									for ($i=0;$i<$nbLignes;$i++){
+									  echo '<option value="'.$tab3[$i]["ANNEE_SPONSOR"].'">'.$tab3[$i]["ANNEE_SPONSOR"];
+									  echo '</option>';
+									} 	
+								echo "</select> ";
 								?>	
 							</td>
 							</tr>
@@ -221,8 +211,7 @@ if(!isset($valeurTestEquipe)){
 						</tr>
 						<tr>
 							<td colspan=2 align="center">
-								<input type='submit' name='AjouterSponsor' value='Ajouter' >
-								
+								<input type='submit' name='Ajouter' value='Ajouter' >
 							</td>
 						</tr>
 					</table>

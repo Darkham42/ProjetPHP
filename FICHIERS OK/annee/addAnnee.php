@@ -33,7 +33,6 @@
 				$valeurTestAnnee = "";
 			}
 
-			
 			if(isset($_POST['Ajouter'])) {
 				
 				if($_POST['annee'] != null && $_POST['repos'] != null) {
@@ -71,6 +70,7 @@
 					if($erreur != 1){
 						$erreur = 0;
 						
+						// VIREFICATION
 						$conn = OuvrirConnexion();
 						$req1 = "SELECT annee from tdf_annee";
 						$cur = preparerRequete($conn, $req1);
@@ -83,6 +83,7 @@
 							}
 						}
 
+						// INSERTION
 						if($anneeDejaExistante != 1) {
 							$req = "INSERT INTO tdf_annee(annee, jour_repos, compte_oracle, date_insert) values($valeurAnnee,$valeurRepos,user, sysdate)";
 							$cur = preparerRequete($conn, $req);
