@@ -82,8 +82,8 @@
 	
 		?>
 		
-		<form name="formModAnnee" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
-			<div align="center" style="margin-left:20%; margin-right:20%">
+		<form name="formModAnnee" action="" method="post" >
+			<div align="center" style="margin-left:10%; margin-right:10%">
 				<fieldset>
 					<table border=0 cellpadding=10>
 						<tr>

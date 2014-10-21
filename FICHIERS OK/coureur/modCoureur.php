@@ -175,7 +175,7 @@
 			}
 		?>
 		
-		<form name="formModCoureur" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
+		<form name="formModCoureur" action="" method="post" >
 			<div align="center" style="margin-left:10%; margin-right:10%">
 				
 				<fieldset >

@@ -149,4 +149,9 @@
 		}
 	}
 
+	// Fonction vérifiant que l'on a bien un float---------
+	function isFloat($f) {
+		return ($f == (string)(float)$f);
+	}
+
 ?>

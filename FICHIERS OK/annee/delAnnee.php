@@ -39,7 +39,7 @@
 			}
 		?>
 		
-		<form name="formDelAnnee" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
+		<form name="formDelAnnee" action="" method="post" >
 			<div align="center" style="margin-left:10%; margin-right:10%">
 
 				<fieldset >

@@ -37,24 +37,23 @@
 				
 				if($_POST['annee'] != null && $_POST['repos'] != null) {
 
-					$valeurAnnee = $_POST['annee'];
-					$valeurRepos = $_POST['repos'];
+					$annee = $_POST['annee'];
+					$repos = $_POST['repos'];
 					
 					//Le premier TDF a eu lieu en 1903
-					if(is_numeric($valeurAnnee)) {
-						if($valeurAnnee < 1903) { 
+					if(is_numeric($annee)) {
+						if($annee < 1903) { 
 							$erreur = 1;
-							$valeurTestAnnee = "Le premier Tour de France a eu lieu en 1903.";
+							$valeurTestAnnee = "Le premier Tour de France a eu lieu en 1903."; //Source wikipedia
 						}
-
 					}
 					else{
 						$erreur = 1;
 						$valeurTestAnnee = "Veuillez entrer une année valide.";
 					}
 
-					if(is_numeric($valeurRepos)){
-						if($valeurRepos < 0){
+					if(is_numeric($repos)){
+						if($repos < 0){
 							$erreur = 1;
 							$valeurTestRepos = "Minimum 0 jours de repos.";
 						}
@@ -77,7 +76,7 @@
 						$tab = executerRequete($cur);
 						$nbLignes = oci_fetch_all($cur, $tab,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
 						for($i = 0; $i<$nbLignes; $i++) {
-							if($valeurAnnee == $tab[$i]['ANNEE']){
+							if($annee == $tab[$i]['ANNEE']){
 								$anneeDejaExistante = 1;
 								$valeurTestAnnee = "L'année existe déjà dans la Base de Données.";
 							}
@@ -85,22 +84,22 @@
 
 						// INSERTION
 						if($anneeDejaExistante != 1) {
-							$req = "INSERT INTO tdf_annee(annee, jour_repos, compte_oracle, date_insert) values($valeurAnnee,$valeurRepos,user, sysdate)";
+							$req = "INSERT INTO tdf_annee(annee, jour_repos, compte_oracle, date_insert) values($annee,$repos,user, sysdate)";
 							$cur = preparerRequete($conn, $req);
 							$tab = executerRequete($cur);
 							oci_commit($conn);
 							$valeurTestAjout = "Année ajoutée.";
 							
-							$valeurAnnee = "";
-							$valeurRepos = "";
+							$annee = "";
+							$repos = "";
 						}
 							
 						FermerConnexion($conn);
 					}
 				}
 				else {
-					$valeurAnnee = $_POST['annee'];
-					$valeurRepos = $_POST['repos'];
+					$annee = $_POST['annee'];
+					$repos = $_POST['repos'];
 
 					if(empty($_POST['annee'])) {
 						$valeurTestAnnee = "Veuillez saisir une année.";
@@ -113,8 +112,8 @@
 
 		?>	
 		
-		<form name="formAddAnnee" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
-			<div align="center" style="margin-left:20%; margin-right:20%">
+		<form name="formAddAnnee" action="" method="post" >
+			<div align="center" style="margin-left:10%; margin-right:10%">
 				<fieldset >
 					<table border=0 cellpadding=10>
 						<tr>
@@ -122,7 +121,7 @@
 								Année<sup>*</sup> :
 							</td>
 							<td>
-								<input type="text" name="annee" size=32 maxlength=4 value="<?php if(isset($valeurAnnee)) echo $valeurAnnee; ?>" placeholder="Saisir une année"> 
+								<input type="text" name="annee" size=32 maxlength=4 value="<?php if(isset($annee)) echo $annee; ?>" placeholder="Saisir une année"> 
 							</td>
 							<td>
 								<font color="red"><?php echo $valeurTestAnnee; ?></font>
@@ -133,7 +132,7 @@
 								Nombre de jour de repos<sup>*</sup> :
 							</td>
 							<td>
-								<input type="text" name="repos" size=32 maxlength=1 value="<?php if(isset($valeurRepos)) echo $valeurRepos; ?>" placeholder="Saisir le nombre de jour de repos"> 
+								<input type="text" name="repos" size=32 maxlength=1 value="<?php if(isset($repos)) echo $repos; ?>" placeholder="Saisir le nombre de jour de repos"> 
 							</td>
 							<td>
 								<font color="red"><?php echo $valeurTestRepos; ?></font>

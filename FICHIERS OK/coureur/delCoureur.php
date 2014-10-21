@@ -39,7 +39,7 @@
 			}
 		?>
 		
-		<form name="formDelCoureur" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
+		<form name="formDelCoureur" action="" method="post" >
 			<div align="center" style="margin-left:10%; margin-right:10%">
 
 				<fieldset >

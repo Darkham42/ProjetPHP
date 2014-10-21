@@ -39,7 +39,7 @@
 			}
 		?>
 		
-		<form name="formDelDirecteur" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
+		<form name="formDelDirecteur" action="" method="post" >
 			<div align="center" style="margin-left:10%; margin-right:10%">
 
 				<fieldset >
