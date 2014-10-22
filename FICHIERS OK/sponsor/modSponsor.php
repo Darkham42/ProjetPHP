@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;">
 		<meta charset="utf-8">
-		<title>Modifier une épreuve du Tour de France</title>
+		<title>Modifier un sponsor du Tour de France</title>
 	</head>
 	<body>
 
@@ -13,17 +13,16 @@
 			include_once ("../log.php");
 		?>
 
-		<h2 align="center">Modification d'une épreuve</h2>
+		<h2 align="center">Modification d'un sponsor</h2>
 
-	<!-- FORMULAIRE POUR MODIFIER UNE EPREUVE DE LA BASE -->
+	<!-- FORMULAIRE POUR MODIFIER UN SPONSOR DE LA BASE -->
 
 <p>Fonction en cours de création.</p>
 	<li><p>A faire</p>
 		<ul>
 			<li>Page modification</li>
-			<li>Page suppression</li>
 		</ul>
 	</li>
-
+	
 	</body>
 </html>

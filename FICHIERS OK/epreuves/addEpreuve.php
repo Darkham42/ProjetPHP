@@ -7,9 +7,10 @@
 	<body>
 
 		<?php
-			include_once ('../menuBarre.php');
-			include_once ('../connBDD.php');
-			include_once ('../fonc_test.php');
+			include_once ("../menuBarre.php");
+			include_once ("../connBDD.php");
+			include_once ("../fonc_test.php");
+			include_once ("../log.php");
 		?>
 
 		<h2 align="center">Ajout d'une épreuve</h2>

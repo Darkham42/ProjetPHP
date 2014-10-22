@@ -7,9 +7,10 @@
 	<body>
 
 		<?php
-			include ('../menuBarre.php');
-			include_once ('../connBDD.php');
-			include_once ('../fonc_test.php');
+			include_once ("../menuBarre.php");
+			include_once ("../connBDD.php");
+			include_once ("../fonc_test.php");
+			include_once ("../log.php");
 		?>
 
 		<h2 align="center">Suppression d'un coureur</h2>
@@ -34,7 +35,9 @@
 					$tab = executerRequete($cur);
 					oci_commit($conn);
 					FermerConnexion($conn);
-					$valeurTestCoureur="Coureur supprimé de la base avec succès.";					
+					$valeurTestCoureur="Coureur supprimé de la base avec succès.";
+					$message = "\r\n\r\nSuppresion avec succès du coureur '".$_POST['coureur']."' \r\n$req\r\n\r\n";
+					traceLog($fp, $message);				
 				}
 			}
 		?>
@@ -64,7 +67,7 @@
 										  echo '</option>';
 										} 	
 									echo "</select> ";
-									
+
 									FermerConnexion($conn);
 								?>	
 							</td>

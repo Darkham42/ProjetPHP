@@ -16,104 +16,104 @@
 
 	<!-- FORMULAIRE POUR AJOUTER UN SPONSOR A LA BASE -->
 
-<?php
-if(!isset($valeurTestEquipe)){
-				$valeurTestEquipe="";	
-			}
-			if(!isset($valeurTestNom)){
-				$valeurTestNom="";
-			}
-			if(!isset($valeurTestTag)){
-				$valeurTestTag="";
-			}
-			if(!isset($valeurPays)){
-				$valeurTestPays="";
-			}
+			<?php
 			$erreur=0;
 			$tag="";
 			$nom="";
-?>
-<?php
-			//on analyse l'enregistrement
+
+			if(!isset($valeurTestEquipe)) {
+				$valeurTestEquipe="";	
+			}
+
+			if(!isset($valeurTestNom)) {
+				$valeurTestNom="";
+			}
+
+			if(!isset($valeurTestTag)) {
+				$valeurTestTag="";
+			}
+
+			if(!isset($valeurPays)) {
+				$valeurTestPays="";
+			}
+
+
 			if(isset($_POST['Ajouter'])){
-				//on test si les champs ont bien été rempli
-				if(($_POST['equipe'] != "Selectionnez une equipe")&&($_POST['nom'] != "")&&($_POST['tag'] != "")&&($_POST['annee'] != "Selectionnez une annee")){
-					//traitement de l'ajout
-					//Test du nom de sponsor
-					if(!testSponsor($_POST['nom'])){
+
+				if(($_POST['equipe'] != "Selectionnez une equipe")&&($_POST['nom'] != "")&&($_POST['tag'] != "")&&($_POST['annee'] != "Selectionnez une année")){
+					
+					if(!testNom($_POST['nom'])) {
 							$erreur = 1;
-							$valeurTestNom="Veuillez entrer un nom valide !";
+							$valeurTestNom="Veuillez saisir un nom valide.";
 						}
-					else{
-						//on transforme la valeur du nom
-						$valeurSponsor = testSponsor($_POST['nom']);
+					else {
+						$valeurSponsor = testNom($_POST['nom']);
 						$nom = $valeurSponsor;
 					}
-					//Test du nom du tag
-					$tagValue=testTag($_POST['tag']);
-					if($tagValue==1){
-							$erreur=1;
-							$valeurTestTag="Veuillez entrer un Tag à 3 caractères";
+
+					$valTAG = testTag($_POST['tag']);
+					if($valTAG == 1 ){
+							$erreur = 1;
+							$valeurTestTag="Veuillez saisir un Tag de 3 caractères";
 					}
-					if($tagValue==-1){
-							$erreur=1;
-							$valeurTestTag="Veuillez entrer un Tag alphanumérique";
+					if($valTAG == -1) {
+							$erreur = 1;
+							$valeurTestTag="Veuillez saisir un TAG [A-Z][0-9]";
 					}
-					else{
-							$valeurTag = $tagValue;
-							$tag = $valeurTag;
-					}
+					else
+						$tag = $valTAG ;
 					
-					//requete 
 					$conn = OuvrirConnexion();
-					$req = "select max(n_sponsor)+1 as nb_sponsor from tdf_sponsor where n_equipe=".$_POST['equipe']." group by n_equipe";
+					$req = "SELECT max(n_sponsor)+1 as nb_sponsor from tdf_sponsor where n_equipe=".$_POST['equipe']." group by n_equipe";
 					$cur = preparerRequete($conn, $req);
 					$tab1 = executerRequete($cur);
 					FermerConnexion($conn);
+
 					$maxNumSponsor = array();
 					oci_fetch_all($cur,$maxNumSponsor);
-					$numSponsor=$maxNumSponsor['NB_SPONSOR'][0];
-					//requete ajout
+					$numSponsor = $maxNumSponsor['NB_SPONSOR'][0];
+					
 					$conn = OuvrirConnexion();
-					$req = "insert into tdf_sponsor (n_equipe,n_sponsor,nom,na_sponsor,code_tdf,annee_sponsor,compte_oracle,date_insert) values (".$_POST['equipe'].",".$numSponsor.",'".$nom."','".$tag."','".$_POST['pays']."',".$_POST['annee'].",user,sysdate)";
-					$cur = preparerRequete($conn, $req);
+					$req2 = "INSERT INTO tdf_sponsor (n_equipe,n_sponsor,nom,na_sponsor,code_tdf,annee_sponsor,compte_oracle,date_insert) values (".$_POST['equipe'].",".$numSponsor.",'".$nom."','".$tag."','".$_POST['pays']."',".$_POST['annee'].",user,sysdate)";
+					$cur = preparerRequete($conn, $req2);
 					$tab = executerRequete($cur);
 					oci_commit($conn);
 
 					FermerConnexion($conn);
 					
-					$valeurTestEquipe="";
+					$valeurTestEquipe = "";
 				}
 				else{
-					if($_POST['equipe']=="Selectionnez une equipe"){
-						$valeurTestEquipe = "Veuillez selectionner une equipe";
+					if($_POST['equipe'] == "Selectionnez une equipe") {
+						$valeurTestEquipe = "Veuillez selectionner une equipe.";
 					}
-					if($_POST['nom']==""){
-						$valeurTestNom = "Veuillez entrer un nom";
+					if($_POST['nom'] == "") {
+						$valeurTestNom = "Veuillez saisir un nom.";
 					}
-					if($_POST['tag']==""){
-						$valeurTestTag = "Veuillez entrer un tag";
+					if($_POST['tag'] == "") {
+						$valeurTestTag = "Veuillez saisir un tag.";
 					}
-					if($_POST['annee']=="Selectionnez une annee"){
-						$valeurTestAnnee = "Veuillez selectionner une annee";
+					if($_POST['annee'] == "Selectionnez une année") {
+						$valeurTestAnnee = "Veuillez selectionner une année.";
 					}
 										
 				}
 			}
 		?>
-		<form name="formAjoutCoureur" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" >
-			<div align="center" style="margin-left:20%; margin-right:20%">
-				<fieldset >
-					<legend>Ajout d'un sponsor</legend>
+
+		<form name="formAddCoureur" action="" method="post" >
+			<div align="center" style="margin-left:10%; margin-right:10%">
+				
+				<fieldset>
 					<table border=0 cellpadding=10>
 						<tr>
 							<td>
-								Choisissez l'équipe concerné :
+								Choisissez une équipe :
 							</td>
 							<td>
 								<?php
 									$conn = OuvrirConnexion();
-									$req = 'select n_equipe,nom from tdf_equipe join tdf_sponsor using (n_equipe) where annee_disparition is null and (n_equipe,n_sponsor) in (select n_equipe,max(n_sponsor) as dernier_sponsor from tdf_sponsor group by n_equipe) order by nom';
+									$req = 'SELECT n_equipe, nom from tdf_equipe join tdf_sponsor using (n_equipe) where annee_disparition is null and (n_equipe,n_sponsor) in (select n_equipe,max(n_sponsor) as dernier_sponsor from tdf_sponsor group by n_equipe) order by nom';
 									$cur = preparerRequete($conn, $req);
 									$tab2 = executerRequete($cur);
 									FermerConnexion($conn);
@@ -132,37 +132,37 @@ if(!isset($valeurTestEquipe)){
 							<td>
 								<font color='red'><?php echo $valeurTestEquipe; ?></font>
 							</td>
-							</tr>
-							<tr>
+						</tr>
+						<tr>
 							<td>
-							Nom :
+								Nom :
 							</td>
 							<td>
 								<input type="text" name="nom" size=32 value="<?php if(isset($valeurNom)) echo $valeurNom ?>" placeholder="Entrez un nom">
 							</td>
 							<td>
-							<font color='red'><?php echo $valeurTestNom; ?></font>
+								<font color='red'><?php echo $valeurTestNom; ?></font>
 							</td>
-							</tr>
-							<tr>
+						</tr>
+						<tr>
 							<td>
-							Tag :
+								Tag :
 							</td>
 							<td>
 								<input type="text" name="tag" size=32 value="<?php if(isset($valeurTag)) echo $valeurTag; ?>" placeholder="Entrez un tag">
 							</td>
 							<td>
-							<font color='red'><?php echo $valeurTestTag; ?></font>
+								<font color='red'><?php echo $valeurTestTag; ?></font>
 							</td>
-							</tr>
-							<tr>
+						</tr>
+						<tr>
 							<td>
 								Pays :
 							</td>
 							<td>
 								<?php
 									$conn = OuvrirConnexion();
-									$req = 'SELECT code_tdf, c_pays, nom from TDF_PAYS order by nom';
+									$req = 'SELECT code_tdf, c_pays, nom from TDF_PAYS where nom not like \'-%\' order by nom';
 									$cur = preparerRequete($conn, $req);
 									$tab3 = executerRequete($cur);
 									FermerConnexion($conn);
@@ -183,35 +183,31 @@ if(!isset($valeurTestEquipe)){
 							</td>
 						</tr>
 						<tr>
-							<tr>
 							<td>
-							Annee :
+								Annee :
 							</td>
 							<td>
-							<?php
-								$conn = OuvrirConnexion();
-								$req = 'select unique(annee_sponsor) from tdf_sponsor order by annee_sponsor desc';
-								$cur = preparerRequete($conn, $req);
-								$tab3 = executerRequete($cur);
-								FermerConnexion($conn);
-								$nbLignes = oci_fetch_all($cur, $tab3,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
-								
-								echo "<select name='annee' size=1>";
-									echo "<option value=''>Selectionnez une annee</option>";
-									for ($i=0;$i<$nbLignes;$i++){
-									  echo '<option value="'.$tab3[$i]["ANNEE_SPONSOR"].'">'.$tab3[$i]["ANNEE_SPONSOR"];
-									  echo '</option>';
-									} 	
-								echo "</select> ";
-								?>	
-							</td>
-							</tr>
-							<td>
+								<?php
+									$conn = OuvrirConnexion();
+									$req = 'SELECT DISTINCT annee_sponsor from tdf_sponsor order by annee_sponsor desc';
+									$cur = preparerRequete($conn, $req);
+									$tab3 = executerRequete($cur);
+									FermerConnexion($conn);
+									$nbLignes = oci_fetch_all($cur, $tab3,0,-1,OCI_FETCHSTATEMENT_BY_ROW);
+									
+									echo "<select name='annee' size=1>";
+										echo "<option value=''>Selectionnez une année</option>";
+										for ($i=0; $i<$nbLignes; $i++){
+										  echo '<option value="'.$tab3[$i]["ANNEE_SPONSOR"].'">'.$tab3[$i]["ANNEE_SPONSOR"];
+										  echo '</option>';
+										} 	
+									echo "</select> ";
+									?>
 							</td>
 						</tr>
 						<tr>
 							<td colspan=2 align="center">
-								<input type='submit' name='Ajouter' value='Ajouter' >
+								<input type='submit' name='Ajouter' value='Ajouter'>
 							</td>
 						</tr>
 					</table>

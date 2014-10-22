@@ -7,9 +7,10 @@
 	<body>
 
 		<?php
-			include_once ('../menuBarre.php');
-			include_once ('../connBDD.php');
-			include_once ('../fonc_test.php');
+			include_once ("../menuBarre.php");
+			include_once ("../connBDD.php");
+			include_once ("../fonc_test.php");
+			include_once ("../log.php");
 		?>
 
 		<h2 align="center">Ajout d'un directeur</h2>
@@ -82,12 +83,22 @@
 						$tab = executerRequete($cur);
 						oci_commit($conn);
 						
-						FermerConnexion($conn);
+						$message = "\r\n\r\nAjout avec succès du directeur $nom $prenom \r\n$reqINS\r\n\r\n";
+						traceLog($fp, $message);
 						
 						$valeurTestAjout = "Directeur ajouté avec succès.";
-						$valeurNom = "";
-						$valeurPrenom= "";
 					}
+					else {
+						$erreur = 1;
+						$valeurTestAjout = "Votre directeur existe déjà.";
+						$message = "\r\n\r\nEchec\r\n$req\r\n\r\n";
+						traceLog($fp, $message);
+					}
+
+					FermerConnexion($conn);
+					
+					$valeurNom = "";
+					$valeurPrenom= "";
 					
 				}
 				else{

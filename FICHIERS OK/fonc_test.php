@@ -31,8 +31,8 @@
 	    	array_push($sTab, $mot);
 		}
 
-		$string = implode("-", $sTab);
-		return $string;
+		$s = implode("-", $sTab);
+		return $s;
 	}
 	
 	// Fonction testant le prénom--------------------------
@@ -49,8 +49,6 @@
 		$tchar2 = '--';
 		$tchar3 = '\'';
 		$tchar4 = '" "';
-		
-		$var = retireAccMAJ($var);
 
 		while(preg_match($fchar1,$var) == 1) {
 			$var = preg_replace($fchar1,$tchar1,$var);
@@ -85,10 +83,6 @@
 		}
 		else {
 			return false;
-		}
-
-		if (strlen(var2) > 30) {
-			$erreur = 1;
 		}
 	}
 
@@ -152,6 +146,25 @@
 	// Fonction vérifiant que l'on a bien un float---------
 	function isFloat($f) {
 		return ($f == (string)(float)$f);
+	}
+
+	// Fonction testant le TAG d'un sponsor----------------
+	function testTag($str) {
+		
+		retireAcc($str);
+
+		if(strlen($str) > 3) {
+			return 1;
+		}
+		if(strlen($str) < 3) {
+			return 1;
+		}
+		if(ctype_alnum($str) == 1) {
+			return $str = mb_strtoupper($str);
+		}
+		else {
+			return -1;
+		}
 	}
 
 ?>

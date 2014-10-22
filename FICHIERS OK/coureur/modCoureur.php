@@ -7,9 +7,10 @@
 	<body>
 
 		<?php
-			include ('../menuBarre.php');
-			include_once ('../connBDD.php');
-			include_once ('../fonc_test.php');
+			include_once ("../menuBarre.php");
+			include_once ("../connBDD.php");
+			include_once ("../fonc_test.php");
+			include_once ("../log.php");
 		?>
 
 		<h2 align="center">Modification d'un coureur</h2>
@@ -68,8 +69,8 @@
 								$valeurTestNom="Veuillez saisir un nom valide.";
 							}
 							else {
-								$valeurNom = testNom($_POST['nom']);
-								$valeurInsertion = $valeurInsertion." nom = '".toSQL($valeurNom)."'";
+								$nom = testNom($_POST['nom']);
+								$valeurInsertion = $valeurInsertion." nom = '".toSQL($nom)."'";
 							}
 						
 						// PRENOM
@@ -78,8 +79,8 @@
 								$valeurTestPrenom = "Veuillez saisir un prénom valide.";
 							}
 
-							$valeurPrenom = testPrenom($_POST['prenom']);						
-							$valeurInsertion = $valeurInsertion.", prenom = '".toSQL($valeurPrenom)."'";
+							$prenom = testPrenom($_POST['prenom']);						
+							$valeurInsertion = $valeurInsertion.", prenom = '".toSQL($prenom)."'";
 						
 						// ANNEE
 							if($_POST['annee_naissance'] != null) {
@@ -122,7 +123,7 @@
 						}
 						
 						// Longueur
-							if (strlen($valeurPrenom) > 30 || strlen($valeurNom) > 20 ) {
+							if (strlen($prenom) > 30 || strlen($nom) > 20 ) {
 								$erreur = 1;
 								$valeurTestModif = "Nombre de charactères incorects."; 
 							}
@@ -132,7 +133,7 @@
 
 							$conn = OuvrirConnexion();
 							$req = "UPDATE tdf_coureur set".$valeurInsertion." where n_coureur =".$_POST['numCoureur'];
-							$reqTEST = "SELECT nom, prenom, code_tdf FROM vt_coureur WHERE nom = '".toSQL($valeurNom)."' and prenom = '".toSQL($valeurPrenom)."' and code_tdf = '".$_POST['pays']."' ";
+							$reqTEST = "SELECT nom, prenom, code_tdf FROM vt_coureur WHERE nom = '".toSQL($nom)."' and prenom = '".toSQL($prenom)."' and code_tdf = '".$_POST['pays']."' ";
 							
 							$cur = preparerRequete($conn, $reqTEST);
 							$tab = executerRequete($cur);
@@ -144,17 +145,21 @@
 								$tab = executerRequete($cur2);
 								oci_commit($conn);
 								$valeurTestModif = "Votre coureur a été modifié avec succès de la BDD.";
+								$message = "\r\n\r\nModification avec succès du coureur $nom $prenom \r\n$req\r\n\r\n";
+								traceLog($fp, $message);
 							}
 							else {
 								$erreur = 1;
 								$valeurTestModif = "Votre coureur existe déjà.";
+								$message = "\r\n\r\nEchec\r\n$req\r\n\r\n";
+								traceLog($fp, $message);
 							}
 							
 							$valeurTestSelectionCoureur = "";
 							$valeurTestNom = "";
-							$valeurNom = "";
+							$nom = "";
 							$valeurNumCoureur = "";
-							$valeurPrenom = "";
+							$prenom = "";
 							$valeurTestPrenom = "";
 							$valeurAnnee = "";
 							$valeurParticipation = "";
@@ -211,7 +216,7 @@
 								Nom<sup>*</sup> :
 							</td>
 							<td>
-								<input type="text" name="nom" size=32 maxlength=20 value="<?php if(isset($valeurNom)) echo $valeurNom; ?>" > 
+								<input type="text" name="nom" size=32 maxlength=20 value="<?php if(isset($nom)) echo $nom; ?>" > 
 							</td>
 							<td>
 								<font color="red" size=2><b><?php echo $valeurTestNom; ?></b></font>
@@ -222,7 +227,7 @@
 								Prenom<sup>*</sup> :
 							</td>
 							<td>
-								<input type="text" name="prenom" size=32 maxlength=30 value="<?php if(isset($valeurPrenom)) echo $valeurPrenom; ?>" >
+								<input type="text" name="prenom" size=32 maxlength=30 value="<?php if(isset($prenom)) echo $prenom; ?>" >
 							</td>
 							<td>
 								<font color="red" size=2><b><?php echo $valeurTestPrenom; ?></b></font>

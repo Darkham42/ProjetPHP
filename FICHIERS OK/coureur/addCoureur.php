@@ -7,9 +7,10 @@
 	<body>
 
 		<?php
-			include_once ('../menuBarre.php');
-			include_once ('../connBDD.php');
-			include_once ('../fonc_test.php');
+			include_once ("../menuBarre.php");
+			include_once ("../connBDD.php");
+			include_once ("../fonc_test.php");
+			include_once ("../log.php");
 		?>
 
 		<h2 align="center">Ajout d'un coureur</h2>
@@ -74,10 +75,10 @@
 								$erreur = 1;
 								$valeurTestPrenom = "Veuillez saisir un prénom valide.";
 							}
-
-							$valeurPrenom = testPrenom($_POST['prenom']);
-							$prenom = $valeurPrenom;						
-							$prenom = $prenom;
+							else {
+								$valeurPrenom = testPrenom($_POST['prenom']);
+								$prenom = $valeurPrenom;
+							}
 						
 						// ANNEE
 							if($_POST['annee_naissance'] != null) {
@@ -144,10 +145,14 @@
 								$tab = executerRequete($cur2);
 								oci_commit($conn);
 								$valeurTestAjout = "Votre coureur a été ajouté avec succès à la BDD.";
+								$message = "\r\n\r\nAjout avec succès du coureur $nom $prenom \r\n$req\r\n\r\n";
+								traceLog($fp, $message);
 							}
 							else {
 								$erreur = 1;
 								$valeurTestAjout = "Votre coureur existe déjà.";
+								$message = "\r\n\r\nEchec\r\n$req\r\n\r\n";
+								traceLog($fp, $message);
 							}
 
 							// Remise à 0 du form
